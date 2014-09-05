@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.user.openUrl.contrib">
+
+<!-- Following URLs don't need user authentication -->
+
+  <extension
+    target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService"
+    point="openUrl">
+    <openUrl name="register">
+      <grantPattern>${org.nuxeo.ecm.contextPath}/site/register/</grantPattern>
+    </openUrl>
+    <openUrl name="registerChildren">
+      <grantPattern>${org.nuxeo.ecm.contextPath}/site/register/.*</grantPattern> 
+    </openUrl>
+    <openUrl name="ExternalUser_Graphical_Resources">
+      <grantPattern>${org.nuxeo.ecm.contextPath}/site/skin/register/.*</grantPattern>
+    </openUrl>
+  </extension>
+
+</component>

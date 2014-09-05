@@ -1,9 +1,14 @@
+Manifest-Version: 1.0
+Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=regi
+ ster;package=org/nuxeo/labs/users/we
+Bundle-Vendor: Nuxeo
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Manifest-Version: 1.0
-Bundle-Name: nuxeo-labs-external-user-registration
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-Vendor: Nuxeo
 Bundle-Version: 1.0.qualifier
+Bundle-Name: nuxeo-labs-external-user-registration
+Nuxeo-Component: OSGI-INF/externaluser-openurl-contrib.xml,external-us
+ er-registration-service-framework.xml
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: nuxeo-labs-external-user-registration
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
