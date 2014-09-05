@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <fragment version="1">
 
-  <!-- <require>org.nuxeo.ecm.platform.comment.web</require> -->
+  <require>org.nuxeo.ecm.user.invite</require>
 
   <install>
     <!--  unzip the war template -->

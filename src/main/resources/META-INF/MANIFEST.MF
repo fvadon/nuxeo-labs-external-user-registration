@@ -1,14 +1,16 @@
 Manifest-Version: 1.0
-Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=regi
- ster;package=org/nuxeo/labs/users/we
+Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=register;package=org/nuxeo/labs/users/we
 Bundle-Vendor: Nuxeo
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Version: 1.0.qualifier
 Bundle-Name: nuxeo-labs-external-user-registration
-Nuxeo-Component: OSGI-INF/externaluser-openurl-contrib.xml,external-us
- er-registration-service-framework.xml
+Nuxeo-Component: OSGI-INF/ext-user-openurl-contrib.xml,
+ OSGI-INF/ext-user-registration-actions-contrib.xml,
+ OSGI-INF/ext-user-registration-contentviews-contrib.xml,
+ OSGI-INF/ext-user-registration-layouts-contrib.xml,
+ OSGI-INF/ext-user-registration-conf-contrib.xml
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: nuxeo-labs-external-user-registration
+Bundle-SymbolicName: nuxeo.labs.external.user.registration
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 

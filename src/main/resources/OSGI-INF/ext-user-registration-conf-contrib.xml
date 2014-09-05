@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.labs.user.invite.core.service.contrib">
+
+	<extension target="org.nuxeo.ecm.user.invite.UserInvitationService"
+		point="configuration">
+		<configuration name="external_user_registration" merge="true">
+			<requestDocType>UserInvitation</requestDocType>
+			<container>
+				<docType>UserInvitationContainer</docType>
+				<parentPath>/management/</parentPath>
+				<name>externalRegistrationRequests</name>
+				<title>External Invitation Requests Container</title>
+			</container>
+			<validationEmail>
+				<title>You have been accepted to Nuxeo</title>
+				<template>extUserRegistration/ValidationEmailTemplate.ftl
+				</template>
+			</validationEmail>
+			<enterPasswordUrl>site/userInvitation/enterpassword/</enterPasswordUrl>
+			<validationRelUrl>site/userInvitation/validate</validationRelUrl>
+		</configuration>
+	</extension>
+
+</component>

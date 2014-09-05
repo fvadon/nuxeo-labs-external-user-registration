@@ -4,8 +4,6 @@
 
 package org.nuxeo.labs.users.we;
 
-import static org.nuxeo.ecm.user.invite.UserRegistrationInfo.EMAIL_FIELD;
-import static org.nuxeo.ecm.user.invite.UserRegistrationInfo.USERNAME_FIELD;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -27,17 +25,10 @@ import org.nuxeo.ecm.core.api.UnrestrictedSessionRunner;
 import org.nuxeo.ecm.core.api.repository.RepositoryManager;
 import org.nuxeo.ecm.user.invite.UserInvitationComponent;
 import org.nuxeo.ecm.user.invite.UserInvitationService;
-import org.nuxeo.ecm.user.invite.UserRegistrationConfiguration;
-import org.nuxeo.ecm.user.invite.UserRegistrationInfo;
-//import org.nuxeo.ecm.user.registration.UserRegistrationService;
 import org.nuxeo.ecm.webengine.forms.FormData;
 import org.nuxeo.ecm.webengine.model.WebObject;
 import org.nuxeo.ecm.webengine.model.impl.ModuleRoot;
 import org.nuxeo.runtime.api.Framework;
-
-
-//import static org.nuxeo.ecm.user.invite.UserInvitationService.ValidationMethod.EMAIL;
-
 
 
 
@@ -51,8 +42,22 @@ import org.nuxeo.runtime.api.Framework;
 @WebObject(type="ExternalRegistrationRoot")
 public class ExternalRegistrationRoot extends ModuleRoot {
 
-    private static final String USER_INFO = "userInfo";
-    public static final String CONFIGURATION_NAME = UserRegistrationConfiguration.DEFAULT_CONFIGURATION_NAME;
+    public static final String SCHEMA_NAME = "userinfo";
+
+    public static final String USERNAME_FIELD = "userinfo:login";
+
+    public static final String PASSWORD_FIELD = "userinfo:password";
+
+    public static final String FIRSTNAME_FIELD = "userinfo:firstName";
+
+    public static final String LASTNAME_FIELD = "userinfo:lastName";
+
+    public static final String EMAIL_FIELD = "userinfo:email";
+
+    public static final String COMPANY_FIELD = "userinfo:company";
+
+    public static final String GROUPS_FIELD = "userinfo:groups";
+    public static final String CONFIGURATION_NAME = "external_user_registration";
     protected static Log log = LogFactory.getLog(UserInvitationService.class);
 
     protected String repoName = null;
@@ -84,24 +89,12 @@ public class ExternalRegistrationRoot extends ModuleRoot {
             return redisplayFormWithMessage("Cannot have empty email", data);
         }
 
-        //to do here : check email format and existence of login/email.
+        //to do here : check email format and existence of login/email (look at TrialObject class for idea)
 
+        Map<String, Serializable> additionnalInfo = new HashMap<String, Serializable>();
 
-        UserRegistrationInfo userInfo = new UserRegistrationInfo();
-
-        userInfo.setLogin(login);
-        userInfo.setFirstName(data.getString("firstName"));
-        userInfo.setLastName(data.getString("lastName"));
-        userInfo.setCompany(company);
-        //userInfo.setPassword(pw1);
-        userInfo.setEmail(email);
-        //userInfo.setCountry(country);
-      //to do here : check email format and existence of login/email (look at TrialObject class for idea)
-
-       Map<String, Serializable> additionnalInfo = new HashMap<String, Serializable>();
-
-       RegistrationSubmitor acceptor = new RegistrationSubmitor(userInfo,additionnalInfo);
-       acceptor.runUnrestricted();
+        RegistrationSubmitor acceptor = new RegistrationSubmitor(data,additionnalInfo);
+        acceptor.runUnrestricted();
 
         return redirect(getPath() + "/success");
 
@@ -126,12 +119,12 @@ public class ExternalRegistrationRoot extends ModuleRoot {
 
     protected class RegistrationSubmitor extends UnrestrictedSessionRunner {
 
-        protected UserRegistrationInfo userInfo;
+        protected FormData data;
         protected Map<String, Serializable> additionnalInfo;
-        public RegistrationSubmitor(UserRegistrationInfo userInfo, Map<String, Serializable> additionnalInfo) {
+        public RegistrationSubmitor(FormData data, Map<String, Serializable> additionnalInfo) {
 
             super(getTargetRepositoryName());
-            this.userInfo=userInfo;
+            this.data=data;
             this.additionnalInfo=additionnalInfo;
 
         }
@@ -141,8 +134,8 @@ public class ExternalRegistrationRoot extends ModuleRoot {
             DocumentModel docUserInfo = session.createDocumentModel("UserInvitation");
 
 
-            String title = "registration request for " + userInfo.getLogin()
-                    + " (" + userInfo.getEmail() + " " + userInfo.getCompany()
+            String title = "registration request for " + data.getString("login")
+                    + " (" + data.getString("email") + " " + data.getString("company")
                     + ") ";
 
             @SuppressWarnings("deprecation")
@@ -156,15 +149,15 @@ public class ExternalRegistrationRoot extends ModuleRoot {
             docUserInfo.setPropertyValue("dc:title", title);
 
             // store userinfo
-            docUserInfo.setPropertyValue(USERNAME_FIELD, userInfo.getLogin());
+            docUserInfo.setPropertyValue(USERNAME_FIELD, data.getString("login"));
             //doc.setPropertyValue(UserRegistrationInfo.PASSWORD_FIELD,userInfo.getPassword());
-            docUserInfo.setPropertyValue(UserRegistrationInfo.FIRSTNAME_FIELD, userInfo.getFirstName());
-            docUserInfo.setPropertyValue(UserRegistrationInfo.LASTNAME_FIELD,userInfo.getLastName());
-            docUserInfo.setPropertyValue(EMAIL_FIELD, userInfo.getEmail());
-            docUserInfo.setPropertyValue(UserRegistrationInfo.COMPANY_FIELD,userInfo.getCompany());
+            docUserInfo.setPropertyValue(FIRSTNAME_FIELD, data.getString("firstName"));
+            docUserInfo.setPropertyValue(LASTNAME_FIELD,data.getString("lastName"));
+            docUserInfo.setPropertyValue(EMAIL_FIELD, data.getString("email"));
+            docUserInfo.setPropertyValue(COMPANY_FIELD,data.getString("company"));
 
 
-            usrService.submitRegistrationRequest(docUserInfo, additionnalInfo,UserInvitationService.ValidationMethod.EMAIL , false);
+            usrService.submitRegistrationRequest(CONFIGURATION_NAME,docUserInfo, additionnalInfo,UserInvitationService.ValidationMethod.EMAIL , false);
 
 
 

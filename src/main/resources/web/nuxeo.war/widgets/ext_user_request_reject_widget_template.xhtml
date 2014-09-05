@@ -1,0 +1,8 @@
+<div xmlns:h="http://java.sun.com/jsf/html">
+
+  <h:commandLink
+          value="#{messages['command.ext.userrequest.reject']}"
+          action="#{extUserRegistrationActions.rejectRegistrationRequest(field_0)}"
+          rendered="#{field_0.currentLifeCycleState == 'created'}" />
+
+</div>
