@@ -18,6 +18,7 @@ package org.nuxeo.labs.users.registration;
 
 import static org.jboss.seam.international.StatusMessage.Severity.ERROR;
 import static org.jboss.seam.international.StatusMessage.Severity.INFO;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,7 @@ import org.nuxeo.ecm.user.invite.UserInvitationService;
 import org.nuxeo.ecm.webapp.documentsLists.DocumentsListsManager;
 import org.nuxeo.ecm.webapp.helpers.ResourcesAccessor;
 
+@SuppressWarnings("deprecation")
 @Name("extUserRegistrationActions")
 @Scope(ScopeType.CONVERSATION)
 public class ExtUserRegistrationActions implements Serializable {
@@ -50,18 +52,10 @@ public class ExtUserRegistrationActions implements Serializable {
 
     private static Log log = LogFactory.getLog(ExtUserRegistrationActions.class);
 
-    //public static final String MULTIPLE_EMAILS_SEPARATOR = ";";
-
     public static final String REQUEST_DOCUMENT_LIST = "CURRENT_USER_REQUESTS";
 
     public static final String REQUESTS_DOCUMENT_LIST_CHANGED = "requestDocumentsChanged";
     public static final String CONFIGURATION_NAME="external_user_registration";
-
-    //protected UserRegistrationInfo userinfo = new UserRegistrationInfo();
-
-    //protected DocumentRegistrationInfo docinfo = new DocumentRegistrationInfo();
-
-    //protected String multipleEmails;
 
     protected String comment;
 
@@ -119,13 +113,6 @@ public class ExtUserRegistrationActions implements Serializable {
         try {
             Map<String, Serializable> additionalInfo = new HashMap<String, Serializable>();
             additionalInfo.put("enterPasswordUrl", getEnterPasswordUrl());
-            // Determine the document url to add it into the email
-            /*String docId = (String) request.getPropertyValue(DocumentRegistrationInfo.DOCUMENT_ID_FIELD);
-            DocumentRef docRef = new IdRef(docId);
-            DocumentModel doc = documentManager.getDocument(docRef);
-            String docUrl = DocumentModelFunctions.documentUrl(doc);
-            additionalInfo.put("docUrl", docUrl);*/
-
             userInvitationService.acceptRegistrationRequest(request.getId(),
                     additionalInfo);
 

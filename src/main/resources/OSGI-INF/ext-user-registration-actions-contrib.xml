@@ -1,45 +1,80 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.labs.user.registration.actions.contrib">
 
-  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
-    point="actions">
+	<extension target="org.nuxeo.ecm.platform.actions.ActionService"
+		point="actions">
 
-    <action id="ExtUserRegistration" link="view_admin-fragment.xhtml" label="admcommand.ext.userregistration"
-      order="55">
-      <category>NUXEO_ADMIN</category>
-      <filter-id>only_for_manager</filter-id>
-    </action>
+		<action id="ExtUserRegistration" link="view_admin-fragment.xhtml"
+			label="admcommand.ext.userregistration" order="55">
+			<category>NUXEO_ADMIN</category>
+			<filter-id>only_for_manager</filter-id>
+		</action>
 
-    <action id="ExtUserRegistrationRequests" link="/incl/extuserregistration/ext_requests_listing_all.xhtml"
-      label="tab.ext.userregistration.requests" order="10">
-      <category>ExtUserRegistration_sub_tab</category>
-      <filter-id>only_for_manager</filter-id>
-    </action>
+		<action id="ExtUserRegistrationRequests"
+			link="/incl/extuserregistration/ext_requests_listing_all.xhtml"
+			label="tab.ext.userregistration.requests" order="10">
+			<category>ExtUserRegistration_sub_tab</category>
+			<filter-id>only_for_manager</filter-id>
+		</action>
 
 
-    <action id="ExtUserRegistrationDelete" link="${extUserRegistrationActions.deleteUserRegistration}"
-      order="20" label="tab.userregistration.delete">
-      <category>CURRENT_EXT_USER_REQUESTS_GLOBAL</category>
-      <category>CURRENT_EXT_USER_REQUESTS_LOCAL</category>
-      <filter id="canDeleteRegistration">
-        <rule grant="true">
-          <condition>#{userRegistrationActions.canDelete}</condition>
-        </rule>
-      </filter>
-    </action>
+		<action id="ExtUserRegistrationDelete"
+			link="${extUserRegistrationActions.deleteUserRegistration}" order="20"
+			label="tab.userregistration.delete">
+			<category>CURRENT_EXT_USER_REQUESTS_GLOBAL</category>
+			<category>CURRENT_EXT_USER_REQUESTS_LOCAL</category>
+			<filter id="canDeleteRegistration">
+				<rule grant="true">
+					<condition>#{userRegistrationActions.canDelete}</condition>
+				</rule>
+			</filter>
+		</action>
 
-    <action id="ExtUserRegistrationValidate" link="${extUserRegistrationActions.validateUserRegistration}"
-      order="25" label="tab.userregistration.validate">
-      <category>CURRENT_EXT_USER_REQUESTS_GLOBAL</category>
-      <category>CURRENT_EXT_USER_REQUESTS_LOCAL</category>
-      <filter-id>only_for_manager</filter-id>
-      <filter id="canValidateRegistration">
-        <rule grant="true">
-          <condition>#{userRegistrationActions.canValidate}</condition>
-        </rule>
-      </filter>
-    </action>
+		<action id="ExtUserRegistrationValidate"
+			link="${extUserRegistrationActions.validateUserRegistration}" order="25"
+			label="tab.userregistration.validate">
+			<category>CURRENT_EXT_USER_REQUESTS_GLOBAL</category>
+			<category>CURRENT_EXT_USER_REQUESTS_LOCAL</category>
+			<filter-id>only_for_manager</filter-id>
+			<filter id="canValidateRegistration">
+				<rule grant="true">
+					<condition>#{userRegistrationActions.canValidate}</condition>
+				</rule>
+			</filter>
+		</action>
 
-  </extension>
+		<action id="tabUserInvitation"
+			link="/incl/extuserregistration/tab_tabUserInvitation.xhtml" order="0"
+			label="User Invitation" type="rest_document_link">
+			<category>VIEW_ACTION_LIST</category>
+			<filter id="filter@tab@tabUserInvitation">
+				<rule grant="true">
+					<type>UserInvitation</type>
+				</rule>
+				<rule grant="false">
+					<condition>document.currentLifeCycleState != "created"</condition>
+				</rule>
+			</filter>
+		</action>
+
+		<action id="tabUserInvitationRead"
+			link="/incl/extuserregistration/tab_tabUserInvitationRead.xhtml"
+			order="0" label="User Invitation" type="rest_document_link">
+			<category>VIEW_ACTION_LIST</category>
+			<filter id="filter@tab@tabUserInvitationRead">
+				<rule grant="true">
+					<type>UserInvitation</type>
+				</rule>
+				<rule grant="false">
+					<condition>document.currentLifeCycleState != "accepted" &amp;&amp;
+						document.currentLifeCycleState != "rejected" &amp;&amp;
+						document.currentLifeCycleState != "validated"
+					</condition>
+				</rule>
+			</filter>
+		</action>
+
+
+	</extension>
 
 </component>

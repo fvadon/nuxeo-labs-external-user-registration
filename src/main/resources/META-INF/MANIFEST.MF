@@ -5,12 +5,13 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Version: 1.0.qualifier
 Bundle-Name: nuxeo-labs-external-user-registration
-Nuxeo-Component: OSGI-INF/ext-user-openurl-contrib.xml,
- OSGI-INF/ext-user-registration-actions-contrib.xml,
- OSGI-INF/ext-user-registration-contentviews-contrib.xml,
- OSGI-INF/ext-user-registration-layouts-contrib.xml,
- OSGI-INF/ext-user-registration-conf-contrib.xml
 Bundle-ManifestVersion: 2
+Nuxeo-Component: OSGI-INF/ext-user-openurl-contrib.xml,OSGI-INF/ext-user-registration-actions-contrib.xml,
+ OSGI-INF/ext-user-registration-contentviews-contrib.xml,OSGI-INF/ext-user-registration-layouts-contrib.xml,
+ OSGI-INF/ext-user-registration-conf-contrib.xml,
+ OSGI-INF/ext-user-registration-core-types-contrib.xml,
+ OSGI-INF/extensions/org.nuxeo.labs.users.registration.AcceptRegistrationOperation.xml,
+ OSGI-INF/extensions/org.nuxeo.labs.users.registration.RejectRegistrationOperation.xml
 Bundle-SymbolicName: nuxeo.labs.external.user.registration
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.labs.user.invite.core.types.contrib">
+	<require>org.nuxeo.ecm.user.invite.core.service.contrib</require>
+	<extension target="org.nuxeo.ecm.platform.types.TypeService"
+		point="types">
+
+		<type id="UserInvitation">
+			<label>UserInvitation</label>
+			<default-view>view_documents</default-view>
+			<layouts mode="any">
+				<layout>heading</layout>
+				<layout>user_registration</layout>
+			</layouts>
+			<layouts mode="edit">
+				<layout>heading</layout>
+				<layout>user_registration</layout>
+			</layouts>
+			<layouts mode="view">
+				<layout>heading</layout>
+				<layout>user_registration</layout>
+			</layouts>
+		</type>
+	</extension>
+
+	<extension target="org.nuxeo.ecm.platform.actions.ActionService"
+		point="actions">
+		<action id="showFancyBoxPreview">
+			<filter id="brochure.deny.showfancyboxpreview">
+				<rule grant="false">
+					<type>UserInvitation</type>
+				</rule>
+			</filter>
+		</action>
+		<action id="TAB_CONTENT_JBPM">
+			<filter id="folder.deny.tab_content_jbpm">
+				<rule grant="false">
+					<type>UserInvitation</type>
+				</rule>
+			</filter>
+		</action>
+		<action id="TAB_RELATIONS">
+			<filter id="folder.deny.tab_relations">
+				<rule grant="false">
+					<type>UserInvitation</type>
+				</rule>
+			</filter>
+		</action>
+		<action id="TAB_VIEW">
+			<filter id="file.deny.custom_tab_view">
+				<rule grant="false">
+					<type>UserInvitation</type>
+				</rule>
+			</filter>
+		</action>
+		<action id="TAB_EDIT">
+			<filter id="file.deny.tab_edit">
+				<rule grant="true">
+					<type>UserInvitation</type>
+				</rule>
+				<rule grant="false">
+					<condition>document.currentLifeCycleState != "created"</condition>
+				</rule>
+			</filter>
+		</action>
+		<action id="TAB_FILES_EDIT">
+			<filter id="folder.deny.tab_files_edit">
+				<rule grant="false">
+					<type>UserInvitation</type>
+				</rule>
+
+			</filter>
+		</action>
+		<action id="view_comments">
+			<filter id="folder.deny.view_comments">
+				<rule grant="false">
+					<type>UserInvitation</type>
+				</rule>
+			</filter>
+		</action>
+		<action id="TAB_MANAGE">
+			<filter id="folder.deny.tab_manage">
+				<rule grant="false">
+					<type>UserInvitation</type>
+				</rule>
+			</filter>
+		</action>
+		<action id="TAB_PUBLISH">
+			<filter id="folder.deny.tab_publish">
+				<rule grant="false">
+					<type>UserInvitation</type>
+				</rule>
+			</filter>
+		</action>
+	</extension>
+
+
+
+</component>
