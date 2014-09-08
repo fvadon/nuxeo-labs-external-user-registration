@@ -21,6 +21,7 @@ import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.IdUtils;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.UnrestrictedSessionRunner;
 import org.nuxeo.ecm.core.api.repository.RepositoryManager;
 import org.nuxeo.ecm.user.invite.UserInvitationComponent;
@@ -57,10 +58,13 @@ public class ExternalRegistrationRoot extends ModuleRoot {
     public static final String COMPANY_FIELD = "userinfo:company";
 
     public static final String GROUPS_FIELD = "userinfo:groups";
+    public static final String TENANTID_FIELD = "userinfo:tenantId";
     public static final String CONFIGURATION_NAME = "external_user_registration";
     protected static Log log = LogFactory.getLog(UserInvitationService.class);
 
     protected String repoName = null;
+    protected DocumentModelList searchResult;
+    protected FormData data;
 
     @GET
     public Object doGet() {
@@ -69,16 +73,13 @@ public class ExternalRegistrationRoot extends ModuleRoot {
     }
 
     @POST
-    @Path("submit")
+    @Path("company")
     @Produces("text/html")
     public Object submitForm() throws LoginException {
 
-        FormData data = getContext().getForm();
-        //String pw1 = data.getString("password");
-        //String pw2 = data.getString("password_verif");
+        data = getContext().getForm();
         String login = data.getString("login");
         String email = data.getString("email");
-        //String country = data.getString("country");
         String company = data.getString("company");
 
 
@@ -89,8 +90,45 @@ public class ExternalRegistrationRoot extends ModuleRoot {
             return redisplayFormWithMessage("Cannot have empty email", data);
         }
 
+        if (company == null || "".equals(email.trim())) {
+            return redisplayFormWithMessage("Cannot have empty company", data);
+        }
         //to do here : check email format and existence of login/email (look at TrialObject class for idea)
 
+        UnestrictedDomainSearcher domainSearcher = new UnestrictedDomainSearcher(data);
+        domainSearcher.runUnrestricted();
+        ctx.setProperty("searchResult", searchResult);
+
+        Map<String, String> savedData = new HashMap<String, String>();
+        for (String key : data.getKeys()) {
+            savedData.put(key, data.getString(key));
+        }
+
+        return getView("company").arg("data", savedData);
+    }
+
+    @POST
+    @Path("submit")
+    @Produces("text/html")
+    public Object submitCompanyForm() throws LoginException {
+
+        data = getContext().getForm();
+        String login = data.getString("login");
+        String email = data.getString("email");
+        String company = data.getString("company");
+
+
+        if (login == null || "".equals(login.trim())) {
+            return redisplayFormWithMessage("Cannot have empty login", data);
+        }
+        if (email == null || "".equals(email.trim())) {
+            return redisplayFormWithMessage("Cannot have empty email", data);
+        }
+
+        if (company == null || "".equals(email.trim())) {
+            return redisplayFormWithMessage("Cannot have empty company", data);
+        }
+        //to do here : check email format and existence of login/email (look at TrialObject class for idea)
         Map<String, Serializable> additionnalInfo = new HashMap<String, Serializable>();
 
         RegistrationSubmitor acceptor = new RegistrationSubmitor(data,additionnalInfo);
@@ -98,8 +136,9 @@ public class ExternalRegistrationRoot extends ModuleRoot {
 
         return redirect(getPath() + "/success");
 
-
     }
+
+
     @GET
     @Path("success")
     @Produces("text/html")
@@ -155,11 +194,34 @@ public class ExternalRegistrationRoot extends ModuleRoot {
             docUserInfo.setPropertyValue(LASTNAME_FIELD,data.getString("lastName"));
             docUserInfo.setPropertyValue(EMAIL_FIELD, data.getString("email"));
             docUserInfo.setPropertyValue(COMPANY_FIELD,data.getString("company"));
+            docUserInfo.setPropertyValue(TENANTID_FIELD,data.getString("tenantId"));
 
 
             usrService.submitRegistrationRequest(CONFIGURATION_NAME,docUserInfo, additionnalInfo,UserInvitationService.ValidationMethod.EMAIL , false);
+        }
+    }
 
+    protected class UnestrictedDomainSearcher extends UnrestrictedSessionRunner {
 
+        protected FormData data;
+        public UnestrictedDomainSearcher(FormData data) {
+
+            super(getTargetRepositoryName());
+            this.data=data;
+
+        }
+
+        @Override
+        public void run() throws ClientException {
+            String query = "select * from Document where ecm:currentLifeCycleState != 'deleted' and ecm:primaryType='Domain'and ecm:fulltext='"
+                    + data.getString("company") + "'";
+
+            //DocumentModelList searchResult = null;
+            try {
+                searchResult = session.query(query);
+            } catch (ClientException e) {
+                log.error(e);
+            }
 
         }
     }
