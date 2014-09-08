@@ -106,20 +106,6 @@
 					</properties>
 					<widget>listing_lifecycle</widget>
 				</column>
-
-				<column>
-					<properties mode="any">
-						<property name="useFirstWidgetLabelAsColumnHeader">false</property>
-					</properties>
-					<widget>ext_user_request_accept</widget>
-				</column>
-
-				<column>
-					<properties mode="any">
-						<property name="useFirstWidgetLabelAsColumnHeader">false</property>
-					</properties>
-					<widget>ext_user_request_reject</widget>
-				</column>
 			</columns>
 		</layout>
 
