@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.labs.multi.tenant.user.invite.core.service.contrib">
+
+  <require>org.nuxeo.ecm.user.invite.core.service.contrib</require>
+
+  <!-- workaround for https://jira.nuxeo.com/browse/NXP-15109 -->
+  <extension target="org.nuxeo.ecm.user.invite.UserInvitationService"
+             point="configuration">
+    <configuration merge="true">
+			<registrationUserFactory>org.nuxeo.labs.users.registration.MultitenantInvitationUserFactory</registrationUserFactory>
+	</configuration>
+  </extension>
+
+
+</component>

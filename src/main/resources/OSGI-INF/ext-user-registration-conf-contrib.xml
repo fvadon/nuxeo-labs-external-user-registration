@@ -18,6 +18,7 @@
 			</validationEmail>
 			<enterPasswordUrl>site/userInvitation/enterpassword/</enterPasswordUrl>
 			<validationRelUrl>site/userInvitation/validate</validationRelUrl>
+			<registrationUserFactory>org.nuxeo.labs.users.registration.MultitenantInvitationUserFactory</registrationUserFactory>
 		</configuration>
 	</extension>
 

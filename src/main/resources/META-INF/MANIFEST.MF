@@ -11,7 +11,8 @@ Nuxeo-Component: OSGI-INF/ext-user-openurl-contrib.xml,OSGI-INF/ext-user-registr
  OSGI-INF/ext-user-registration-conf-contrib.xml,
  OSGI-INF/ext-user-registration-core-types-contrib.xml,
  OSGI-INF/extensions/org.nuxeo.labs.users.registration.AcceptRegistrationOperation.xml,
- OSGI-INF/extensions/org.nuxeo.labs.users.registration.RejectRegistrationOperation.xml
+ OSGI-INF/extensions/org.nuxeo.labs.users.registration.RejectRegistrationOperation.xml,
+ OSGI-INF/multi-tenant-user-registration-contrib.xml
 Bundle-SymbolicName: nuxeo.labs.external.user.registration
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 

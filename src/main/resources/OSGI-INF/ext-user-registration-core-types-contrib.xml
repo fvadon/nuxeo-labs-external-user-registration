@@ -92,7 +92,11 @@
 			</filter>
 		</action>
 	</extension>
-
-
+	<!-- Override of userinfo schema because multitenant does not do it https://jira.nuxeo.com/browse/NXP-15109 -->
+	<extension target="org.nuxeo.ecm.core.schema.TypeService"
+		point="schema">
+		<schema name="userinfo" src="schemas/userinfomultitenant.xsd"
+			/>
+	</extension>
 
 </component>
