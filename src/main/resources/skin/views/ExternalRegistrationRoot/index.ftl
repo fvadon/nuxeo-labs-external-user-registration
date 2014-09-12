@@ -1,5 +1,4 @@
 <@extends src="base.ftl">
-<@block name="header">Welcome new potential user</@block>
 
 <@block name="content">
 
@@ -11,20 +10,35 @@
     </div>
   </#if>
 
-<div>
-<p> Please give us a few information to validate your request. You will be able to choose a password once your request has been accepted.</p> </br>
-  <form method="POST" action="${This.path}/submit" enctype="application/x-www-form-urlencoded">
-	  Login: <input type="text" name="login" value="${data['login']}" required/> <br/>
-	  E-mail: <input type="text" name="email" value="${data['email']}" required/> <br/>
-	  First name: <input type="text" name="firstName" value="${data['firstName']}"/> <br/>
-	  lastName: <input type="text" name="lastName" value="${data['lastName']}"/> <br/>
-	  Company: <input type="text" name="company" value="${data['company']}"/> <br/>
-	  Submit:   <input type="submit" value="Submit"/>
+
+
+<div class="row">
+  <div class="col-md-12"><p>Please give us a few information to validate your request. You will be able to choose a password once your request has been accepted.</p></div>
 </div>
+
+<form role="form" method="POST" action="${This.path}/submit" enctype="application/x-www-form-urlencoded">
+  <div class="form-group">
+    <label for="InputLogin">Login</label>
+    <input type="text" class="form-control" id="InputLogin" placeholder="login" name="login" value="${data['login']}" required/>
+  </div>
+  <div class="form-group">
+    <label for="InputEmail">Email address</label>
+    <input type="email" class="form-control" id="InputEmail" placeholder="foobar@example.com" name="email" value="${data['email']}"required/>
+  </div>
+  <div class="form-group">
+    <label for="InputFirstName">First Name</label>
+    <input type="text" class="form-control" id="InputFirstName" placeholder="First Name" name="firstName" value="${data['firstName']}"/>
+  </div>  
+  <div class="form-group">
+    <label for="InputLastName">Last Name</label>
+    <input type="text" class="form-control" id="InputLastName" placeholder="Last Name" name="lastName" value="${data['lastName']}"/>
+  </div>
+  <div class="form-group">
+    <label for="InputCompany">Company</label>
+    <input type="text" class="form-control" id="InputCompany" placeholder="Company" name="company" value="${data['company']}"/>
+  </div>
+  <button type="submit" class="btn btn-default" value="Submit">Submit</button>
 </form>
-
-
-
 
 
 </@block>

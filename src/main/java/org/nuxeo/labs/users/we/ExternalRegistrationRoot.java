@@ -74,11 +74,8 @@ public class ExternalRegistrationRoot extends ModuleRoot {
     public Object submitForm() throws LoginException {
 
         FormData data = getContext().getForm();
-        //String pw1 = data.getString("password");
-        //String pw2 = data.getString("password_verif");
         String login = data.getString("login");
         String email = data.getString("email");
-        //String country = data.getString("country");
         String company = data.getString("company");
 
 
@@ -89,7 +86,7 @@ public class ExternalRegistrationRoot extends ModuleRoot {
             return redisplayFormWithMessage("Cannot have empty email", data);
         }
 
-        //to do here : check email format and existence of login/email (look at TrialObject class for idea)
+        //Improvement : check email format and existence of login/email (look at TrialObject class for idea)
 
         Map<String, Serializable> additionnalInfo = new HashMap<String, Serializable>();
 
