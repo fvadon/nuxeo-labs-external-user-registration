@@ -3,6 +3,8 @@ Nuxeo External User Registration
 
 This project creates a webengine page to allow external user to join Nuxeo. It also add the corresponding link on the front page.
 
+**This branch is a specific version for a prototype and requires one specific Studio project to work. The interesting part is that it is integrated with multi-tenant integrated (requires the plugin to work), so it can a good source of inspiration to create a generic multi-tenant external registration process.**
+
 ## Build
 
 You can build the plugin with `mvn clean install`
